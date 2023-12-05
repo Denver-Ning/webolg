@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.springboot.mapper.ProductMapper">
+    <update id="update">
+        update product
+        <set>
+            <if test="product_name != null">
+                product_name = #{product_name}
+            </if>
+            <if test="product_price != null">
+                product_price = #{product_price}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

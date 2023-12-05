@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.springboot.mapper.BlogSettingMapper">
+    <select id="seleceDetail" resultMap="blog">
+        select * from sys_blog_setting where id = #{id}
+    </select>
+    <resultMap id="blog" type="com.ning.springboot.entity.BlogSetting">
+        <id property="id" column="id"/>
+        <result property="blogName" column="blog_name"/>
+        <result property="authorName" column="author_name"/>
+        <result property="authorAvatar" column="author_avatar"/>
+        <result property="githubUrl" column="github_url"/>
+        <result property="githubSwitch" column="github_switch"/>
+        <result property="giteeUrl" column="gitee_url"/>
+        <result property="giteeSwitch" column="gitee_switch"/>
+        <result property="nuggetsSwitch" column="nuggets_switch"/>
+        <result property="nuggetsUrl" column="nuggets_url"/>
+    </resultMap>
+</mapper>
