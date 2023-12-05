@@ -4,15 +4,19 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.ning.springboot.common.Constants;
+import com.ning.springboot.common.LoginUser;
 import com.ning.springboot.entity.User;
 import com.ning.springboot.exception.ServiceException;
 import com.ning.springboot.service.IUserService;
+import com.ning.springboot.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@Component
 public class JwtInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -47,7 +51,15 @@ public class JwtInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             throw new ServiceException(Constants.CODE_403, "登录已过期");
         }
-
+        // 设置用户上下文信息
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUserId(userId);
+        UserUtils.setUserContext(loginUser);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        UserUtils.clearThreadLocal();
     }
 }
