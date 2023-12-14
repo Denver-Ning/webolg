@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ning.springboot.mapper.BlogSettingMapper">
-    <select id="seleceDetail" resultMap="blog">
-        select * from sys_blog_setting where id = #{id}
+    <select id="selectDetail" resultMap="blog">
+        select *
+        from sys_blog_setting
+        where user_id = #{id}
     </select>
     <resultMap id="blog" type="com.ning.springboot.entity.BlogSetting">
         <id property="id" column="id"/>
@@ -16,4 +18,48 @@
         <result property="nuggetsSwitch" column="nuggets_switch"/>
         <result property="nuggetsUrl" column="nuggets_url"/>
     </resultMap>
+    <insert id="insert" parameterType="com.ning.springboot.entity.BlogSetting">
+        insert into sys_blog_setting (user_id, blog_name, author_name, author_avatar, `desc`, github_url, gitee_url,
+                                      nuggets_url, github_switch, gitee_switch, nuggets_switch, create_time,
+                                      update_time)
+        values (#{userId}, #{blogName}, #{authorName}, #{authorAvatar}, #{desc}, #{githubUrl}, #{giteeUrl},
+                #{nuggetsUrl}, #{githubSwitch}, #{giteeSwitch}, #{nuggetsSwitch}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="update" parameterType="com.ning.springboot.entity.BlogSetting">
+        update sys_blog_setting
+        <set>
+            <if test="blogName != null">
+                blog_name = #{blogName},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName},
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar = #{authorAvatar},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc},
+            </if>
+            <if test="githubUrl != null">
+                github_url = #{githubUrl},
+            </if>
+            <if test="githubSwitch != null">
+                github_switch = #{githubSwitch},
+            </if>
+            <if test="giteeUrl != null">
+                gitee_url = #{giteeUrl},
+            </if>
+            <if test="giteeSwitch != null">
+                gitee_switch = #{giteeSwitch},
+            </if>
+            <if test="nuggetsSwitch != null">
+                nuggets_switch = #{nuggetsSwitch},
+            </if>
+            <if test="nuggetsUrl != null">
+                nuggets_url = #{nuggetsUrl},
+            </if>
+            update_time = #{updateTime}
+        </set>
+        where user_id = #{userId}
+    </update>
 </mapper>

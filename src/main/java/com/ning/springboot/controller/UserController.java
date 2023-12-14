@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
-import com.ning.springboot.service.IUserService;
+import com.ning.springboot.service.UserService;
 import com.ning.springboot.entity.User;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -34,10 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    //    @Resource(name = "userServiceImpl")
-//    private IUserService userService;
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
 
     @PostMapping
@@ -71,6 +69,11 @@ public class UserController {
         return Result.success(true);
     }
 
+    // 更新
+    @PostMapping("/update")
+    public Result update(@RequestBody User user) {
+        return Result.success(userService.updateById(user));
+    }
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         return Result.success(userService.removeById(id));
@@ -104,17 +107,18 @@ public class UserController {
     }
 
     @GetMapping("/export")
-    public void export(HttpServletResponse response) throws Exception {
+    public Result export(HttpServletResponse response) throws Exception {
         List<User> list = userService.list();
         ExcelWriter writer = ExcelUtil.getWriter();
         writer.write(list, true);
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,charset=utf-8");
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
         String fileName = URLEncoder.encode("用户列表", "UTF-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
         ServletOutputStream out = response.getOutputStream();
         writer.flush(out, true);
         out.close();
         writer.close();
+        return Result.success(true);
     }
 
     /*

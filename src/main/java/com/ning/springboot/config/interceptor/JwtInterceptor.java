@@ -7,10 +7,11 @@ import com.ning.springboot.common.Constants;
 import com.ning.springboot.common.LoginUser;
 import com.ning.springboot.entity.User;
 import com.ning.springboot.exception.ServiceException;
-import com.ning.springboot.service.IUserService;
+import com.ning.springboot.service.UserService;
 import com.ning.springboot.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class JwtInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)  {
         // 获取请求头中的令牌
@@ -53,7 +54,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
         // 设置用户上下文信息
         LoginUser loginUser = new LoginUser();
-        loginUser.setUserId(userId);
+        loginUser.setUserId(NumberUtils.toInt(userId));
         UserUtils.setUserContext(loginUser);
         return true;
     }

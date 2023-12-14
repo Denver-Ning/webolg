@@ -21,7 +21,9 @@ public class Result {
     public static Result success(Object data){
         return new Result(Constants.CODE_200, "success", data);
     }
-
+    public static Result success(Boolean flag){
+        return new Result(Constants.CODE_200, "success", flag);
+    }
     public static Result error() {
         return new Result(Constants.CODE_500, "系统错误", null);
     }

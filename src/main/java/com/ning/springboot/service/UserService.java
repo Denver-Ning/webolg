@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 宁
  * @since 2023-10-29
  */
-public interface IUserService extends IService<User> {
+public interface UserService extends IService<User> {
 
     userDto login(userDto userDto);
 

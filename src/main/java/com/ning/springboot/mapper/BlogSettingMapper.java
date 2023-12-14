@@ -7,5 +7,10 @@ import java.util.List;
 
 public interface BlogSettingMapper {
 
-    List<BlogSetting> seleceDetail();
+    List<BlogSetting> selectDetail(Integer id);
+
+
+    void update(BlogSetting BlogSetting);
+
+    void insert(BlogSetting BlogSetting);
 }

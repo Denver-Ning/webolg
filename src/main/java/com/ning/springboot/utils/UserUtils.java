@@ -13,7 +13,7 @@ public class UserUtils {
      * 获取用户id
      * @return  用户id
      */
-    public static String  getUserId(){
+    public static Integer  getUserId(){
         LoginUser loginUser = getLoginUser();
         if (loginUser == null) {
             return null;

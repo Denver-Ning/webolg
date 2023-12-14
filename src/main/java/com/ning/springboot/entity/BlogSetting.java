@@ -2,6 +2,8 @@ package com.ning.springboot.entity;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class BlogSetting {
     private Integer id;
@@ -14,8 +16,11 @@ public class BlogSetting {
     private Integer githubSwitch;
     private String giteeUrl;
     private Integer giteeSwitch;
-    private String nuggetsSwitch;
-    private Integer nuggetsUrl;
+    private Integer nuggetsSwitch;
+    private String nuggetsUrl;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
+
     public Integer getId() {
         return id;
     }
@@ -23,16 +28,6 @@ public class BlogSetting {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public Integer getGiteeSwitch() {
-        return giteeSwitch;
-    }
-
-    public void setGiteeSwitch(Integer giteeSwitch) {
-        this.giteeSwitch = giteeSwitch;
-    }
-
-
 
     public Integer getUserId() {
         return userId;
@@ -98,20 +93,43 @@ public class BlogSetting {
         this.giteeUrl = giteeUrl;
     }
 
+    public Integer getGiteeSwitch() {
+        return giteeSwitch;
+    }
 
-    public String getNuggetsSwitch() {
+    public void setGiteeSwitch(Integer giteeSwitch) {
+        this.giteeSwitch = giteeSwitch;
+    }
+
+    public Integer getNuggetsSwitch() {
         return nuggetsSwitch;
     }
 
-    public void setNuggetsSwitch(String nuggetsSwitch) {
+    public void setNuggetsSwitch(Integer nuggetsSwitch) {
         this.nuggetsSwitch = nuggetsSwitch;
     }
 
-    public Integer getNuggetsUrl() {
+    public String getNuggetsUrl() {
         return nuggetsUrl;
     }
 
-    public void setNuggetsUrl(Integer nuggetsUrl) {
+    public void setNuggetsUrl(String nuggetsUrl) {
         this.nuggetsUrl = nuggetsUrl;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 }

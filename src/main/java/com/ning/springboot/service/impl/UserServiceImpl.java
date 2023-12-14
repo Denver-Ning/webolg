@@ -8,7 +8,7 @@ import com.ning.springboot.controller.dto.userDto;
 import com.ning.springboot.entity.User;
 import com.ning.springboot.exception.ServiceException;
 import com.ning.springboot.mapper.UserMapper;
-import com.ning.springboot.service.IUserService;
+import com.ning.springboot.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ning.springboot.utils.TokenUtils;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  * @since 2023-10-29
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     private static final Log LOG = Log.get();
 
     @Override

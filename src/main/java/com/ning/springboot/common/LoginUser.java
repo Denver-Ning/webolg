@@ -11,5 +11,5 @@ public class LoginUser {
     /**
      * 用户id
      */
-    private String userId;
+    private Integer userId;
 }
