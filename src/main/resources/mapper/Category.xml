@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.springboot.mapper.CategoryMapper">
+    <resultMap id="tag" type="com.ning.springboot.entity.Category">
+        <id property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="selectList" resultType="com.ning.springboot.entity.Category">
+        select * from sys_category
+        <if test="categoryName != null and categoryName != ''">
+            where category_name like concat('%',#{categoryName},'%')
+        </if>
+--         limit ${(pageNum-1)*pageSize},${pageSize}
+    </select>
+    <insert id="insert" parameterType="com.ning.springboot.entity.Category">
+        insert into sys_category(category_name)
+        values(#{categoryName})
+    </insert>
+    <delete id="deleteById" parameterType="com.ning.springboot.entity.Category">
+        delete from sys_category
+        where id = #{id}
+    </delete>
+</mapper>
