@@ -13,6 +13,7 @@ public class Article {
     private String title;
     private String content;
     private String coverImg;
+    private Integer desc;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
