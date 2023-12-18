@@ -6,9 +6,12 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ning.springboot.common.Constants;
 import com.ning.springboot.common.Result;
 import com.ning.springboot.controller.dto.userDto;
+import com.ning.springboot.mapper.UserMapper;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
 
     @PostMapping
@@ -134,6 +139,25 @@ public class UserController {
         System.out.println(list);
         userService.saveBatch(list);
         return true;
+    }
+
+    @GetMapping("/pageUser")
+    public Result pageUser(@RequestParam("pageNum") Integer pageNum,
+                       @RequestParam("pageSize") Integer pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        List<User> users = userMapper.selectList(wrapper);
+        PageInfo<User> userPageInfo = new PageInfo<>(users);
+        return Result.success(userPageInfo);
+    }
+
+    @GetMapping("/pageUserNoMybatisPlus")
+    public Result pageUserNoMybatisPlus(@RequestParam("pageNum") Integer pageNum,
+                       @RequestParam("pageSize") Integer pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> users = userMapper.listAll();
+        PageInfo<User> userPageInfo = new PageInfo<>(users);
+        return Result.success(userPageInfo);
     }
 }
 
