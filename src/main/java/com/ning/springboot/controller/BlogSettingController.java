@@ -16,8 +16,6 @@ public class BlogSettingController {
     @Autowired
     private BlogSettingMapper blogSettingMapper;
 
-
-
     @PostMapping("/save")
     public Result update(@RequestBody BlogSetting BlogSetting) {
         // 获取id 查询数据库是否有数据

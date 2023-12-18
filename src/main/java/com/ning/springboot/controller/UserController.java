@@ -1,9 +1,6 @@
 package com.ning.springboot.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.poi.excel.ExcelReader;
-import cn.hutool.poi.excel.ExcelUtil;
-import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
@@ -11,20 +8,13 @@ import com.github.pagehelper.PageInfo;
 import com.ning.springboot.common.Constants;
 import com.ning.springboot.common.Result;
 import com.ning.springboot.controller.dto.userDto;
-import com.ning.springboot.mapper.UserMapper;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.List;
 
-import com.ning.springboot.service.UserService;
+import com.ning.springboot.service.IUserService;
 import com.ning.springboot.entity.User;
-
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -38,11 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
-
-
+    private IUserService userService;
     @PostMapping
     public Result save(@RequestBody User user) {
         return Result.success(userService.save(user));
@@ -110,52 +96,22 @@ public class UserController {
             wrapper.like("address", address);
         return Result.success(userService.page(new Page<>(pageNum, pageSize), wrapper));
     }
-
-    @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws Exception {
-        List<User> list = userService.list();
-        ExcelWriter writer = ExcelUtil.getWriter();
-        writer.write(list, true);
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        String fileName = URLEncoder.encode("用户列表", "UTF-8");
-        response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
-        ServletOutputStream out = response.getOutputStream();
-        writer.flush(out, true);
-        out.close();
-        writer.close();
-        return Result.success(true);
-    }
-
-    /*
-     * 导入 import
-     * file
-     * */
-    @PostMapping("/import")
-    public Boolean imp(MultipartFile file) throws Exception {
-        InputStream inputStream = file.getInputStream();
-        ExcelReader reader = ExcelUtil.getReader(inputStream);
-//                List<User> list = reader.readAll(User.class);
-        List<User> list = reader.read(0, 1, User.class);
-        System.out.println(list);
-        userService.saveBatch(list);
-        return true;
-    }
-
-    @GetMapping("/pageUser")
-    public Result pageUser(@RequestParam("pageNum") Integer pageNum,
-                       @RequestParam("pageSize") Integer pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        List<User> users = userMapper.selectList(wrapper);
-        PageInfo<User> userPageInfo = new PageInfo<>(users);
-        return Result.success(userPageInfo);
-    }
+//
+//    @GetMapping("/pageUser")
+//    public Result pageUser(@RequestParam("pageNum") Integer pageNum,
+//                       @RequestParam("pageSize") Integer pageSize){
+//        PageHelper.startPage(pageNum, pageSize);
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        List<User> users = userMapper.selectList(wrapper);
+//        PageInfo<User> userPageInfo = new PageInfo<>(users);
+//        return Result.success(userPageInfo);
+//    }
 
     @GetMapping("/pageUserNoMybatisPlus")
     public Result pageUserNoMybatisPlus(@RequestParam("pageNum") Integer pageNum,
                        @RequestParam("pageSize") Integer pageSize){
         PageHelper.startPage(pageNum, pageSize);
-        List<User> users = userMapper.listAll();
+        List<User> users = userService.listAll();
         PageInfo<User> userPageInfo = new PageInfo<>(users);
         return Result.success(userPageInfo);
     }

@@ -1,13 +1,12 @@
 package com.ning.springboot.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ning.springboot.entity.Tag;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-public interface TagMapper {
-    List<Tag> selectList(String tagName, Integer pageNum, Integer pageSize);
-
-    void insert(Tag tag);
-
-    void deleteById(Tag tag);
+@Mapper
+public interface TagMapper extends BaseMapper<Tag> {
+    List<Tag> selectList(String tagName);
 }

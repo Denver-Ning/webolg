@@ -4,6 +4,8 @@ import com.ning.springboot.controller.dto.userDto;
 import com.ning.springboot.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -12,9 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 宁
  * @since 2023-10-29
  */
-public interface UserService extends IService<User> {
+public interface IUserService extends IService<User> {
 
     userDto login(userDto userDto);
 
     userDto register(userDto userDto);
+
+    List<User> listAll();
 }

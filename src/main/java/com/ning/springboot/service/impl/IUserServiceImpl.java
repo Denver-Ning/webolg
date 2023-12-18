@@ -8,10 +8,12 @@ import com.ning.springboot.controller.dto.userDto;
 import com.ning.springboot.entity.User;
 import com.ning.springboot.exception.ServiceException;
 import com.ning.springboot.mapper.UserMapper;
-import com.ning.springboot.service.UserService;
+import com.ning.springboot.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ning.springboot.utils.TokenUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,7 +24,7 @@ import org.springframework.stereotype.Service;
  * @since 2023-10-29
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class IUserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     private static final Log LOG = Log.get();
 
     @Override
@@ -66,5 +68,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new ServiceException(Constants.CODE_500, "系统异常");
         }
         return one;
+    }
+    @Override
+    public List<User> listAll() {
+        return baseMapper.listAll();
     }
 }

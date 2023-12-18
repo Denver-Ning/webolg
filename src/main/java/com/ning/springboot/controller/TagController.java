@@ -1,10 +1,14 @@
 package com.ning.springboot.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ning.springboot.common.Result;
 import com.ning.springboot.entity.Tag;
-import com.ning.springboot.mapper.TagMapper;
+import com.ning.springboot.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,17 +21,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tag")
 public class TagController {
     @Autowired
-    private TagMapper tagService;
-
+    private ITagService tagService;
     @GetMapping("/list")
+    public Result list(){
+        List<Tag> list = tagService.list();
+        return Result.success(list);
+    }
+    @GetMapping("/pageList")
     public Result list(
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(required = false) String tagName
     ){
-//        PageHelper.startPage(pageNum, pageSize);
-//        return Result.success(tagService.selectList(tagName));
-        return Result.success(tagService.selectList(tagName, pageNum, pageSize));
+        PageHelper.startPage(pageNum, pageSize);
+        List<Tag> list = tagService.selectList(tagName);
+        PageInfo<Tag> pageInfo = new PageInfo<>(list);
+        return Result.success(pageInfo);
     }
     @PostMapping("/add")
     public Result add(@RequestBody Tag tag){

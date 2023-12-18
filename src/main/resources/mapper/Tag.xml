@@ -14,7 +14,6 @@
         <if test="tagName != null and tagName != ''">
             where tag_name like concat('%',#{tagName},'%')
         </if>
-        limit ${(pageNum-1)*pageSize},${pageSize}
     </select>
     <insert id="insert" parameterType="com.ning.springboot.entity.Tag">
         insert into sys_tags(tag_name)
