@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ning.springboot.mapper.ArticleMapper">
+    <resultMap id="tag" type="com.ning.springboot.entity.Article">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="coverImg" column="cover_img"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ning.springboot.entity.Article">
+        insert into sys_article (user_id, tag_id, category_id, cover_img,`desc`,content,`title`)
+        values (#{userId}, #{tagId}, #{categoryId}, #{coverImg},#{desc},#{content},#{title})
+    </insert>
+
+    <select id="selectList" resultMap="tag">
+        select * from sys_article
+        <if test="articleName != null and articleName != ''">
+            where title like concat('%', #{articleName}, '%')
+        </if>
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from sys_article where id = #{id}
+    </delete>
+    <update id="updateById" parameterType="com.ning.springboot.entity.Article">
+        update sys_article
+        <if test="tagId != null">
+            tag_id = #{tagId}
+        </if>
+        <if test="categoryId != null">
+            category_id = #{categoryId}
+        </if>
+        <if test="coverImg != null">
+            cover_img = #{coverImg}
+        </if>
+        <if test="desc != null">
+            `desc` = #{desc}
+        </if>
+        <if test="content != null">
+            content = #{content}
+        </if>
+        <if test="title != null">
+            title = #{title}
+        </if>
+        where id = #{id}
+    </update>
+    <select id="list" resultMap="tag">
+        select * from sys_article
+    </select>
+</mapper>

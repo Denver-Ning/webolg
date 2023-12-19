@@ -21,4 +21,7 @@ public interface IUserService extends IService<User> {
     userDto register(userDto userDto);
 
     List<User> listAll();
+
+    List<User> pageList(String username, String address);
+
 }

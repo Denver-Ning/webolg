@@ -25,7 +25,7 @@ public class CategoryController {
 
     @GetMapping("/list")
     public Result list(){
-        List<Category> list = categoryService.list();
+        List<Category> list = categoryService.selectList(null);
         return Result.success(list);
     }
     @GetMapping("/pageList")

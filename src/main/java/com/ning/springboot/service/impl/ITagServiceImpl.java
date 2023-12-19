@@ -24,4 +24,8 @@ public class ITagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITag
     public void deleteById(Tag tag) {
         baseMapper.deleteById(tag);
     }
+    @Override
+    public List<Tag> list() {
+        return baseMapper.list();
+    }
 }

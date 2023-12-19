@@ -11,4 +11,5 @@ public interface ICategoryService extends IService<Category> {
     void insert(Category category);
 
     void deleteById(Category category);
+    List<Category> list();
 }

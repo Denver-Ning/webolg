@@ -23,4 +23,7 @@
         delete from sys_tags
         where id = #{id}
     </delete>
+    <select id="list" resultMap="tag">
+        select * from sys_tags
+    </select>
 </mapper>

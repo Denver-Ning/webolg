@@ -84,29 +84,15 @@ public class UserController {
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
                            @RequestParam Integer pageSize,
-                           @RequestParam(value = "username", required = false, defaultValue = "") String username,
-                           @RequestParam(value = "address", required = false, defaultValue = "") String address
+                           @RequestParam(required = false) String username,
+                           @RequestParam(required = false) String address
 
     ) {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc("id");
-        if (!"".equals(username))
-            wrapper.like("username", username);
-        if (!"".equals(address))
-            wrapper.like("address", address);
-        return Result.success(userService.page(new Page<>(pageNum, pageSize), wrapper));
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = userService.pageList(username, address);
+        PageInfo<User> pageInfo = new PageInfo<>(list);
+        return Result.success(pageInfo);
     }
-//
-//    @GetMapping("/pageUser")
-//    public Result pageUser(@RequestParam("pageNum") Integer pageNum,
-//                       @RequestParam("pageSize") Integer pageSize){
-//        PageHelper.startPage(pageNum, pageSize);
-//        QueryWrapper<User> wrapper = new QueryWrapper<>();
-//        List<User> users = userMapper.selectList(wrapper);
-//        PageInfo<User> userPageInfo = new PageInfo<>(users);
-//        return Result.success(userPageInfo);
-//    }
-
     @GetMapping("/pageUserNoMybatisPlus")
     public Result pageUserNoMybatisPlus(@RequestParam("pageNum") Integer pageNum,
                        @RequestParam("pageSize") Integer pageSize){

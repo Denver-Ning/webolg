@@ -73,4 +73,8 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper, User> implements I
     public List<User> listAll() {
         return baseMapper.listAll();
     }
+    @Override
+    public List<User> pageList(String username, String address) {
+        return baseMapper.pageList(username, address);
+    }
 }

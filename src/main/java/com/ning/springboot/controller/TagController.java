@@ -24,7 +24,7 @@ public class TagController {
     private ITagService tagService;
     @GetMapping("/list")
     public Result list(){
-        List<Tag> list = tagService.list();
+        List<Tag> list = tagService.selectList(null);
         return Result.success(list);
     }
     @GetMapping("/pageList")

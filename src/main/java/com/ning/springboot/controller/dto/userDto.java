@@ -12,7 +12,7 @@ public class userDto {
     private String nickname;
     private String email;
     private String token;
-
+    private Integer id;
     public void setUsername(String username) {
         this.username = username;
     }

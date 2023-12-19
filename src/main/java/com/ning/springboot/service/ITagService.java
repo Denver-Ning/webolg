@@ -13,4 +13,5 @@ public interface ITagService extends IService<Tag> {
     void insert(Tag tag);
 
     void deleteById(Tag tag);
+    List<Tag> list();
 }

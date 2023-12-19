@@ -21,4 +21,8 @@ public class ICategoryImpl extends ServiceImpl<CategoryMapper, Category> impleme
     public void deleteById(Category category) {
         baseMapper.deleteById(category);
     }
+    @Override
+    public List<Category> list() {
+        return baseMapper.list();
+    }
 }

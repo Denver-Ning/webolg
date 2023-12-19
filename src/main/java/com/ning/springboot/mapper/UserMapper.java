@@ -17,4 +17,5 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     List<User> listAll();
+    List<User> pageList(String username, String address);
 }

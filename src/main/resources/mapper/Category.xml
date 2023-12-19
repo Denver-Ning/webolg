@@ -14,7 +14,6 @@
         <if test="categoryName != null and categoryName != ''">
             where category_name like concat('%',#{categoryName},'%')
         </if>
---         limit ${(pageNum-1)*pageSize},${pageSize}
     </select>
     <insert id="insert" parameterType="com.ning.springboot.entity.Category">
         insert into sys_category(category_name)
@@ -24,4 +23,7 @@
         delete from sys_category
         where id = #{id}
     </delete>
+    <select id="list" resultMap="tag">
+        select * from sys_category
+    </select>
 </mapper>

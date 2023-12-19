@@ -4,5 +4,13 @@
     <select id="listAll" resultType="com.ning.springboot.entity.User">
         select * from sys_user
     </select>
-
+    <select id="pageList" resultType="com.ning.springboot.entity.User">
+        select * from sys_user
+        <if test="username != null and username != ''">
+            where username like concat('%',#{username},'%')
+        </if>
+        <if test="address != null and address != ''">
+            where address like concat('%',#{address},'%')
+        </if>
+    </select>
 </mapper>
